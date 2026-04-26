@@ -1,0 +1,11 @@
+// ini cara nge hit endpoint post
+// content-type ini buat ngasih tau server, request datanya tuh JSON
+POST http://localhost:8080/event
+content-type: application/json
+
+{
+    "Name": "Ray",
+    "Description": "handsome",
+    "Location": "bogor",
+    "DateTime": "2026-04-25T12:00:00.000Z"
+}
