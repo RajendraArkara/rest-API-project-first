@@ -19,7 +19,13 @@ func main() {
 }
 
 func getEvents(context *gin.Context) {
-	events := models.GetAllEvents()
+	events, err := models.GetAllEvents()
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{
+			"Message": "Could not fetch events data. Try again layter",
+			"Error":   err.Error(),
+		})
+	}
 	context.JSON(http.StatusOK, events)
 }
 
