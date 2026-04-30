@@ -8,6 +8,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// cuman buat ijoin github
+
 func main() {
 	db.InitDB()
 	server := gin.Default()
