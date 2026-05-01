@@ -8,8 +8,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// cuman buat ijoin github
-
 func main() {
 	db.InitDB()
 	server := gin.Default()
@@ -38,14 +36,21 @@ func createEvents(context *gin.Context) {
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{
 			"Message": "could not parse the data",
-			"error":   err.Error()})
+			"error":   err.Error(),
+		})
 		return
 	}
 
 	event.ID = 1
 	event.UserID = 1
 
-	event.Save()
+	err = event.Save()
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{
+			"Message": "Could not fetch events. Try again later",
+			"Error":   err.Error(),
+		})
+	}
 
 	context.JSON(http.StatusCreated, gin.H{"message": "event created!", "event": event})
 }
