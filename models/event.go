@@ -15,6 +15,8 @@ type Event struct {
 	UserID      int
 }
 
+// komen
+
 var events = []Event{}
 
 func (e Event) Save() error {
