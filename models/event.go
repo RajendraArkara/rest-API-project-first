@@ -15,7 +15,8 @@ type Event struct {
 	UserID      int
 }
 
-// komen
+// komen ke 2 nih
+// lagi deh
 
 var events = []Event{}
 
