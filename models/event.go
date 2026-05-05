@@ -18,6 +18,8 @@ type Event struct {
 // komen ke 2 nih
 // lagi deh
 // lagi
+// lagi
+// lagi
 var events = []Event{}
 
 func (e Event) Save() error {
