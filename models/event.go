@@ -55,7 +55,7 @@ func GetAllEvents() ([]Event, error) {
 	for rows.Next() {
 		var event Event
 
-		err := rows.Scan(&event.Name, &event.Description, &event.Location, &event.DateTime, &event.UserID)
+		err := rows.Scan(&event.ID, &event.Name, &event.Description, &event.Location, &event.DateTime, &event.UserID)
 		if err != nil {
 			return nil, err
 		}
