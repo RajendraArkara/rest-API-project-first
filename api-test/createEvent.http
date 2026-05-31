@@ -4,7 +4,7 @@ POST http://localhost:8080/event
 content-type: application/json
 
 {
-    "Name": "Ray",
+    "Name": "Ray very",
     "Description": "handsome",
     "Location": "bogor",
     "DateTime": "2026-04-25T12:00:00.000Z"

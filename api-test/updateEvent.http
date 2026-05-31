@@ -1,0 +1,9 @@
+PUT http://localhost:8080/event/3
+Content-Type: application/json
+
+{
+    "name": "AkuSiapa",
+    "description": "gak tau",
+    "location": "dimana?",
+    "dateTime": "2026-04-25T12:00:00Z"
+}

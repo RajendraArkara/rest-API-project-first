@@ -80,7 +80,7 @@ func updateEvent(context *gin.Context) {
 	_, err = models.GetEventByID(eventId)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{
-			"Message": "Could not fetch events. Try again later",
+			"Message": "Could not fetch events. Try again later (id nya gak ada!)",
 			"Error":   err.Error(),
 		})
 		return
@@ -90,9 +90,54 @@ func updateEvent(context *gin.Context) {
 	err = context.ShouldBindJSON(&updatedEvent)
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{
-			"Message": "could not parse the data",
+			"Message": "Invalid request data",
 			"error":   err.Error(),
 		})
 		return
 	}
+
+	updatedEvent.ID = eventId
+	err = updatedEvent.Update()
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{
+			"Message": "Could not update event. Try again later.",
+			"error":   err.Error(),
+		})
+		return
+	}
+	context.JSON(http.StatusOK, gin.H{"message": "event update!"})
+}
+
+func deleteEvent(context *gin.Context) {
+	eventId, err := strconv.ParseInt(context.Param("id"), 10, 64)
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{
+			"Message": "Could not parse event ID",
+			"Error":   err.Error(),
+		})
+		return
+	}
+
+	event, err := models.GetEventByID(eventId) // fetch data
+	// kenapa pake event? kenapa gak pake _
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{
+			"Message": "Could not fetch the id.",
+			"Error":   err.Error(),
+		})
+		return
+	}
+
+	err = event.Delete()
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{
+			"Message": "Could not delete data.",
+			"Error":   err.Error(),
+		}) // kadang masih bingung soal mana yang harus buat error sendiri sama mana yang udah dari sono ada error nya
+		// mungkin kalau function sendiri kita harus bikin error message sendiri kali ya? tapi kalau bikin sendiri apa harus make
+		// JSON? atau emang error selalu di buat di handler? jadi harus ada JSON nya?
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{"message": "event deleted!"})
 }
