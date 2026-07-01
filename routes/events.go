@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"github.com/RajendraArkara/first-api-project/models"
+	"github.com/RajendraArkara/first-api-project/utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -51,8 +52,17 @@ func createEvents(context *gin.Context) {
 		return
 	}
 
+	userId, err := utils.VerifyToken(token)
+
+	if err != nil {
+		context.JSON(http.StatusUnauthorized, gin.H{
+			"Message": "Not Authorize",
+		})
+		return
+	}
+
 	var event models.Event
-	err := context.ShouldBindJSON(&event)
+	err = context.ShouldBindJSON(&event)
 
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{
@@ -62,8 +72,7 @@ func createEvents(context *gin.Context) {
 		return
 	}
 
-	event.ID = 1
-	event.UserID = 1
+	event.UserID = userId
 
 	err = event.Save()
 	if err != nil {
@@ -127,8 +136,8 @@ func deleteEvent(context *gin.Context) {
 		return
 	}
 
-	event, err := models.GetEventByID(eventId) // fetch data
-	// kenapa pake event? kenapa gak pake _
+	event, err := models.GetEventByID(eventId)
+
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{
 			"Message": "Could not fetch the id.",
@@ -142,9 +151,7 @@ func deleteEvent(context *gin.Context) {
 		context.JSON(http.StatusInternalServerError, gin.H{
 			"Message": "Could not delete data.",
 			"Error":   err.Error(),
-		}) // kadang masih bingung soal mana yang harus buat error sendiri sama mana yang udah dari sono ada error nya
-		// mungkin kalau function sendiri kita harus bikin error message sendiri kali ya? tapi kalau bikin sendiri apa harus make
-		// JSON? atau emang error selalu di buat di handler? jadi harus ada JSON nya?
+		})
 		return
 	}
 
