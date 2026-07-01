@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/RajendraArkara/first-api-project/models"
+	"github.com/RajendraArkara/first-api-project/utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -32,6 +33,17 @@ func signUp(context *gin.Context) {
 	})
 }
 
+func GetUser(contect *gin.Context) {
+	user, err := models.GetUser()
+	if err != nil {
+		contect.JSON(http.StatusInternalServerError, gin.H{
+			"Message": "User not found",
+		})
+	}
+
+	contect.JSON(http.StatusOK, user)
+}
+
 // semua request handler paraneter nya dari gin.Context
 func login(context *gin.Context) {
 	var user models.User
@@ -50,5 +62,16 @@ func login(context *gin.Context) {
 		return
 	}
 
-	context.JSON(http.StatusOK, gin.H{"Message": "Login successful"})
+	token, err := utils.GenerateToken(user.Email, user.ID)
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{
+			"Message": "Could not authenticate user",
+		})
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{
+		"Message": "Login successful",
+		"Token":   token,
+	})
 }
