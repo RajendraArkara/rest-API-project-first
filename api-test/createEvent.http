@@ -2,10 +2,11 @@
 // content-type ini buat ngasih tau server, request datanya tuh JSON
 POST http://localhost:8080/event
 content-type: application/json
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3Q2QGV4YW1wbGUuY29tIiwiZXhwIjoxNzgyOTExMDkzLCJ1c2VySWQiOjB9.0n32R2d2M8rdBRMhRZGVSZjgsj4qRSlWxpwsyRKcbf0
 
 {
-    "Name": "Ray very",
-    "Description": "handsome",
+    "Name": "tes",
+    "Description": "tes event new!",
     "Location": "bogor",
     "DateTime": "2026-04-25T12:00:00.000Z"
 }
