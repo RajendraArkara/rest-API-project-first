@@ -5,7 +5,6 @@ import (
 	"strconv"
 
 	"github.com/RajendraArkara/first-api-project/models"
-	"github.com/RajendraArkara/first-api-project/utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -43,26 +42,8 @@ func getEvent(context *gin.Context) {
 }
 
 func createEvents(context *gin.Context) {
-	token := context.Request.Header.Get("Authorization")
-
-	if token == "" {
-		context.JSON(http.StatusUnauthorized, gin.H{
-			"Message": "Not Authorize",
-		})
-		return
-	}
-
-	userId, err := utils.VerifyToken(token)
-
-	if err != nil {
-		context.JSON(http.StatusUnauthorized, gin.H{
-			"Message": "Not Authorize",
-		})
-		return
-	}
-
 	var event models.Event
-	err = context.ShouldBindJSON(&event)
+	err := context.ShouldBindJSON(&event)
 
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{
@@ -72,6 +53,7 @@ func createEvents(context *gin.Context) {
 		return
 	}
 
+	userId := context.GetInt64("userId")
 	event.UserID = userId
 
 	err = event.Save()
