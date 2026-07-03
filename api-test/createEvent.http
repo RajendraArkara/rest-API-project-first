@@ -2,7 +2,7 @@
 // content-type ini buat ngasih tau server, request datanya tuh JSON
 POST http://localhost:8080/event
 content-type: application/json
-authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3Q2QGV4YW1wbGUuY29tIiwiZXhwIjoxNzgyOTExMDkzLCJ1c2VySWQiOjB9.0n32R2d2M8rdBRMhRZGVSZjgsj4qRSlWxpwsyRKcbf0
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3Q2QGV4YW1wbGUuY29tIiwiZXhwIjoxNzgyOTE1NTQwLCJ1c2VySWQiOjN9.YvBzkvjhyb8SQRSjf18OMdkxOpxesTKXBQuboMMi3_4
 
 {
     "Name": "tes",
