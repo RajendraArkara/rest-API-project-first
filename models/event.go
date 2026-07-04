@@ -112,5 +112,13 @@ func (event Event) Delete() error {
 
 	_, err = stmt.Exec(event.ID)
 	return err
-	// ini kenapa pakai _ ya?
+}
+
+func (e *Event) Register(userId int64) error {
+	query := "INSERT INTO registrations(event_id, user_id) VALUES(?, ?)"
+
+	stmt, err := db.DB.Prepare(query)
+	if err != nil {
+		return err
+	}
 }
